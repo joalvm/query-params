@@ -1,8 +1,7 @@
 {
     "name": "@joalvm/query-params",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Convierte un objeto a parametros de url",
-    "type": "module",
     "main": "./lib/cjs/query.js",
     "types": "./lib/cjs/query.d.js",
     "files": [
