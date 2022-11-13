@@ -7,8 +7,8 @@
         "checkJs": true,
         "allowJs": true,
         "declaration": true,
-        "declarationMap": true,
         "allowSyntheticDefaultImports": true
     },
-    "files": ["../src/query.ts"]
+    "include": ["../src"],
+    "exclude": ["../lib/esm", "../lib/esm"]
 }

@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "lib": ["es2020", "DOM"],
+        "target": "ES5",
+        "module": "ES2015",
+        "moduleResolution": "Node",
+        "outDir": "../lib/umd",
+        "declarationDir": "../lib/umd"
+    }
+}

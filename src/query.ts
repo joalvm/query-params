@@ -1,29 +1,49 @@
-class Query {
+/**
+ * Utilitario para manejar los parametros como objeto y luego convertirlos a string
+ * y unirlos a una url.
+ */
+export default class Query {
+    /**
+     * @property {boolean}
+     */
+    private encode: boolean = false;
+
+    /**
+     *
+     * @param {Object} parameters Parametros a ser serializados.
+     * @param {string|undefined} url (Opcional) url que se unirá a los parametros.
+     */
     constructor(
         private parameters: Record<string, any>,
-        private encoded = false
+        private url: string = ""
     ) {}
 
     /**
-     * Convierte un objecto a paramatros GET serializados.
+     * Serializa los parametros y lo concatena a la url.
+     *
+     * @param {boolean} encode Condificar los caracteres especiales.
+     * @returns {string}
      */
-    static encode(parameters: Record<string, any>): string {
-        return new Query(parameters, true).serialize();
+    serialize(encode: boolean = false): string {
+        this.encode = encode;
+
+        return this.concat(
+            Object.entries(this.flatten(this.parameters))
+                .map(this.handleEncode.bind(this))
+                .join("&")
+        );
     }
 
-    /**
-     * Convierte un objecto a paramatros GET no serializados.
-     */
-    static toString(parameters: Record<string, any>): string {
-        return new Query(parameters, false).serialize();
+    private concat(params: string) {
+        if (!this.url) {
+            return params;
+        }
+
+        return this.url.replace(/\/$/, "") + "?" + params;
     }
 
-    private serialize(): string {
-        return Object.entries(this.flatten(this.parameters))
-            .map((pair: [string, string]) =>
-                (this.encoded ? pair.map(encodeURIComponent) : pair).join("=")
-            )
-            .join("&");
+    private handleEncode(pair: [string, string]): string {
+        return (this.encode ? pair.map(encodeURIComponent) : pair).join("=");
     }
 
     private flatten(
@@ -59,7 +79,7 @@ class Query {
                     this.flatten(obj[key], this.join(key, path), result);
                     break;
                 default:
-                    result[this.join(key, path)] = !this.encoded
+                    result[this.join(key, path)] = !this.encode
                         ? encodeURIComponent(obj[key])
                         : obj[key];
                     break;
@@ -77,5 +97,3 @@ class Query {
         return key;
     }
 }
-
-export default Query;
