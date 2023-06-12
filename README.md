@@ -3,16 +3,6 @@
 
 Convierte un objeto a una cadena que puede ser usada como parameteros **GET**
 
-
-
-## Installation
-
-Install `@joalvm/query-params` with npm
-
-```bash
-  npm install -S @joalvm/query-params
-```
-
 ## methods
 
 | method                                       | description                                                                                                       |
@@ -22,7 +12,7 @@ Install `@joalvm/query-params` with npm
 ## Usage/Examples
 
 ```ts
-import Query from '@joalvm/query-params';
+import Query from './query.ts';
 
 const isProduction = true;
 const optionalUrl = 'https://api.domain.com/users/';
